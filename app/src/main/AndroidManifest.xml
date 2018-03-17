@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="abdulmuqeeth.uic.com.broadcast_app1">
+    
+    <permission
+        android:name="edu.uic.cs478.sp18.project3"
+        android:protectionLevel="dangerous" />
 
     <application
         android:allowBackup="true"
