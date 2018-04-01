@@ -6,6 +6,8 @@
         android:name="edu.uic.cs478.sp18.project3"
         android:protectionLevel="dangerous" />
 
+    <uses-permission android:name="edu.uic.cs478.sp18.project3" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
