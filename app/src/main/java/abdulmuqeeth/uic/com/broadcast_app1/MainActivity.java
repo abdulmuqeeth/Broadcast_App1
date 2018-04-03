@@ -17,6 +17,11 @@ public class MainActivity extends AppCompatActivity {
     private Button attractions_button;
     private Button restaurants_button;
     private static final String MYPERM = "edu.uic.cs478.sp18.project3";
+    private static final String ATTRACTIONS_INTENT_ACTION = "abdulmuqeeth.uic.com.receiver_app.ATTRACTIONS";
+    private static final String RESTAURANTS_INTENT_ACTION = "abdulmuqeeth.uic.com.receiver_app.RESTAURANTS";
+
+    private final static int ATTRACTIONS_REQ_CODE = 100;
+    private final static int RESTAURANTS_REQ_CODE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,21 +39,19 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener attractionListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            meth1();
+            goToAttractions();
         }
     };
 
-    private void meth1(){
+    private void goToAttractions(){
         if (ContextCompat.checkSelfPermission(this, MYPERM)
                 == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(getApplicationContext(), "Attractions" , Toast.LENGTH_SHORT).show();
-            Intent attraction = new Intent("abdulmuqeeth.uic.com.receiver_app.ATTRACTIONS");
+            Toast.makeText(getApplicationContext(), "Navigating to Attractions" , Toast.LENGTH_SHORT).show();
+            Intent attraction = new Intent(ATTRACTIONS_INTENT_ACTION);
             sendBroadcast(attraction);
         }
         else {
-            Toast.makeText(this, "requesting permission", Toast.LENGTH_SHORT).show();
-
-            ActivityCompat.requestPermissions(this, new String[]{MYPERM}, 100) ;
+            ActivityCompat.requestPermissions(this, new String[]{MYPERM}, ATTRACTIONS_REQ_CODE) ;
         }
 
     }
@@ -56,20 +59,19 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener restaurantsListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-        meth2();
+        goToRestaurants();
         }
     };
 
-    private void meth2(){
-        Toast.makeText(this, "restListen", Toast.LENGTH_SHORT).show();
+    private void goToRestaurants(){
         if (ContextCompat.checkSelfPermission(this, MYPERM)
                 == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(getApplicationContext(), "Restaurants" , Toast.LENGTH_SHORT).show();
-            Intent restaurant = new Intent("abdulmuqeeth.uic.com.receiver_app.RESTAURANTS");
+            Toast.makeText(getApplicationContext(), "Navigating to Restaurants" , Toast.LENGTH_SHORT).show();
+            Intent restaurant = new Intent(RESTAURANTS_INTENT_ACTION);
             sendBroadcast(restaurant);
         }
         else {
-            ActivityCompat.requestPermissions(this, new String[]{MYPERM}, 101) ;
+            ActivityCompat.requestPermissions(this, new String[]{MYPERM}, RESTAURANTS_REQ_CODE) ;
         }
 
     }
@@ -77,22 +79,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Toast.makeText(this, "ReqCode"+requestCode, Toast.LENGTH_SHORT).show();
 
         switch(requestCode){
             case 100 : {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Granted", Toast.LENGTH_SHORT).show();
-                    Intent aIntent = new Intent("abdulmuqeeth.uic.com.receiver_app.ATTRACTIONS");
+                    Toast.makeText(getApplicationContext(), "Navigating to Attractions" , Toast.LENGTH_SHORT).show();
+                    Intent aIntent = new Intent(ATTRACTIONS_INTENT_ACTION);
                     sendBroadcast(aIntent);
                 }
+                break;
             }
 
             case 101: if (grantResults.length > 0) {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Intent aIntent = new Intent("abdulmuqeeth.uic.com.receiver_app.RESTAURANTS");
+                    Toast.makeText(getApplicationContext(), "Navigating to Restaurants" , Toast.LENGTH_SHORT).show();
+                    Intent aIntent = new Intent(RESTAURANTS_INTENT_ACTION);
                     sendBroadcast(aIntent);
                 }
+                break;
             }
             default:
         }
